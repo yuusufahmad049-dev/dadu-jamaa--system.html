@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dadu Muslim Students Jam’aa Sector</title>
+<style>
+:root{--bg:#f6f8f6;--card:#fff;--tx:#17231c;--mu:#5d6b63;--ac:#1b7a4b;--ac2:#e6f3ec;--bd:#d9e2dc;--dn:#b3261e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101613;--card:#18211c;--tx:#e8f0eb;--mu:#98a89f;--ac:#3fc183;--ac2:#1d3328;--bd:#2a3a31;--dn:#f2a6a0}}
+:root[data-theme="dark"]{--bg:#101613;--card:#18211c;--tx:#e8f0eb;--mu:#98a89f;--ac:#3fc183;--ac2:#1d3328;--bd:#2a3a31;--dn:#f2a6a0}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:var(--ac);color:#fff;padding:12px 14px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+header h1{font-size:16px;margin:0}header small{opacity:.9;display:block}
+button,select,input,textarea{font:inherit;color:var(--tx)}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:8px;padding:8px 12px;cursor:pointer}
+.btn.o{background:transparent;color:var(--ac);border:1px solid var(--ac)}
+.btn.w{background:rgba(255,255,255,.18);color:#fff}.btn.d{background:var(--dn);color:#fff}
+.wrap{display:flex;gap:12px;padding:12px;max-width:1100px;margin:auto}
+nav{width:230px;flex:none}
+nav details{background:var(--card);border:1px solid var(--bd);border-radius:10px;margin-bottom:8px}
+nav summary{padding:10px 12px;cursor:pointer;font-weight:600}
+nav a{display:block;padding:7px 12px 7px 24px;color:var(--tx);cursor:pointer;border-top:1px solid var(--bd);font-size:14px}
+nav a.on{background:var(--ac2);color:var(--ac);font-weight:600}
+main{flex:1;min-width:0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px;margin-bottom:12px}
+.card h2{margin:0 0 6px;font-size:18px}.mu{color:var(--mu)}
+ul{margin:6px 0 0;padding-left:18px}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:520px}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--bd)}th{color:var(--mu);font-size:13px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+input,select{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:8px;width:100%}
+.bar input{flex:1;min-width:140px;width:auto}
+.badge{display:inline-block;background:var(--ac2);color:var(--ac);border-radius:20px;padding:2px 10px;font-size:12px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:14px;z-index:20}
+.modal.on{display:flex}.box{background:var(--card);border-radius:12px;padding:16px;width:100%;max-width:400px;max-height:90vh;overflow:auto}
+.box label{display:block;margin:8px 0 3px;font-size:13px;color:var(--mu)}
+.row{display:flex;gap:8px;margin-top:12px;justify-content:flex-end}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:700px){.wrap{flex-direction:column}nav{width:100%}}
+</style></head><body>
+<header>
+<div><h1>Dadu Muslim Students Jam’aa Sector</h1><small id="who">Viewing only (not logged in)</small></div>
+<div><button class="btn w" id="lb"></button></div>
+</header>
+<div class="wrap"><nav id="nav"></nav><main id="main"></main></div>
+
+<div class="modal" id="m1"><div class="box"><h3 style="margin:0">Login (authorized only)</h3>
+<label>Sector</label><select id="ls"></select>
+<label>PIN</label><input id="lp" type="password" inputmode="numeric">
+<div id="le" style="color:var(--dn);font-size:13px;margin-top:6px"></div>
+<div class="row"><button class="btn o" onclick="cl('m1')">Cancel</button><button class="btn" onclick="login()">Login</button></div></div></div>
+
+<div class="modal" id="m2"><div class="box"><h3 style="margin:0" id="mt">Member</h3>
+<label>Full name</label><input id="fn">
+<div class="g2"><div><label>Department</label><input id="fd"></div><div><label>Year</label><input id="fy"></div></div>
+<label>From (town/district)</label><input id="ff">
+<label>Phone number</label><input id="fp" type="tel">
+<div class="row"><button class="btn o" onclick="cl('m2')">Cancel</button><button class="btn" onclick="saveM()">Save</button></div></div></div>
+
+<div class="modal" id="m3"><div class="box"><h3 style="margin:0" id="st">Subleader</h3>
+<label>Name</label><input id="sn"><label>Phone</label><input id="sp" type="tel">
+<div class="row"><button class="btn o" onclick="cl('m3')">Cancel</button><button class="btn" onclick="saveS()">Save</button></div></div></div>
+
+<script>
+const S=[
+{id:'lead',n:'Leadership Sector',pin:'1000',r:['Oversee all sectors and set the jam’aa’s vision and plans','Chair meetings and approve decisions and activities','Coordinate and supervise sub-leaders of every sector','Represent the jam’aa to the university and the community']},
+{id:'vice',n:'Vice Leadership',pin:'1001',r:['Assist the leader in all duties and act in the leader’s absence','Follow up the work and reports of every sector','Help coordinate meetings, plans and activities','Handle tasks delegated by the leadership']},
+{id:'fin',n:'Financial Sector',pin:'2001',r:['Collect and record contributions and donations','Prepare budgets and keep financial reports','Spend funds only with leadership approval','Report income and expenses to members regularly']},
+{id:'ziy',n:'Ziyara Sector',pin:'2002',r:['Visit sick members and students in need','Organize visits to families, elders and communities','Support members in hardship and bereavement']},
+{id:'soc',n:'Social Affairs Sector',pin:'2003',r:['Strengthen brotherhood and sisterhood among members','Organize events, welcomes and farewells','Solve social problems between members']},
+{id:'caf',n:'Caffee Sector',pin:'2004',r:['Manage the jam’aa café and its services','Prepare refreshments for programs and meetings','Keep café stock, hygiene and accounts in order']},
+{id:'aca',n:'Academy Sector',pin:'2005',r:['Organize tutoring, study groups and exam support','Run Qur’an, Islamic studies and skills classes','Help new students with academic guidance']},
+{id:'daw',n:'Da’awa Sector',pin:'2006',r:['Plan lectures, halaqas and da’awa campaigns','Invite and guide students with wisdom and good manners','Prepare speakers, materials and outreach programs']}];
+let D={},auth=null,cur={s:'lead',v:'role'},q='',edit=null;
+try{D=JSON.parse(localStorage.getItem('djs')||'{}')}catch(e){}
+S.forEach(s=>{D[s.id]=D[s.id]||{sub:{male:{n:'',p:''},female:{n:'',p:''}},m:[]}});
+const sv=()=>{try{localStorage.setItem('djs',JSON.stringify(D))}catch(e){}};
+const $=i=>document.getElementById(i),cl=i=>$(i).classList.remove('on'),op=i=>$(i).classList.add('on');
+const esc=t=>String(t||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const can=id=>auth&&(auth==='lead'||auth===id);
+$('ls').innerHTML=S.map(s=>`<option value="${s.id}">${s.n}</option>`).join('');
+function nav(){$('nav').innerHTML=S.map(s=>`<details ${cur.s===s.id?'open':''}><summary>${s.n}</summary>
+${[['role','Role & duties'],['male','Male'],['female','Female']].map(([v,l])=>`<a class="${cur.s===s.id&&cur.v===v?'on':''}" onclick="go('${s.id}','${v}')">${l}${v!=='role'?' ('+D[s.id].m.filter(x=>x.g===v).length+')':''}</a>`).join('')}</details>`).join('');
+$('lb').textContent=auth?'Logout':'Login';
+$('who').textContent=auth?'Logged in: '+S.find(s=>s.id===auth).n+(auth==='lead'?' (can edit all)':''):'Viewing only (not logged in)'}
+function go(s,v){cur={s,v};q='';render()}
+function render(){nav();const s=S.find(x=>x.id===cur.s),d=D[s.id];let h='';
+if(cur.v==='role'){h=`<div class="card"><h2>${s.n}</h2><span class="badge">${d.m.length} members</span>
+<h3>Role & duties</h3><ul>${s.r.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+<div class="card"><h3 style="margin-top:0">Sub-leaders</h3>${['male','female'].map(g=>`<p><b>${g==='male'?'Male':'Female'} sub-leader:</b> ${d.sub[g].n?esc(d.sub[g].n)+' — '+esc(d.sub[g].p):'<span class="mu">not assigned</span>'}
+${can(s.id)?` <button class="btn o" onclick="subE('${g}')">Edit</button>`:''}</p>`).join('')}</div>`}
+else{const g=cur.v,sl=d.sub[g],L=d.m.filter(x=>x.g===g&&(x.n+x.d+x.f+x.p+x.y).toLowerCase().includes(q.toLowerCase()));
+h=`<div class="card"><h2>${s.n} — ${g==='male'?'Male':'Female'}</h2>
+<p>Sub-leader: <b>${sl.n?esc(sl.n)+'</b> · '+esc(sl.p):'</b><span class="mu">not assigned</span>'}
+${can(s.id)?` <button class="btn o" onclick="subE('${g}')">Edit</button>`:''}</p>
+<div class="bar"><input placeholder="Search members…" value="${esc(q)}" oninput="q=this.value;rl()" id="qs">
+${can(s.id)?'<button class="btn" onclick="mE()">+ Add member</button>':''}</div>
+<div class="tw"><table><tr><th>#</th><th>Name</th><th>Department</th><th>Year</th><th>From</th><th>Phone</th>${can(s.id)?'<th></th>':''}</tr>
+${L.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.n)}</td><td>${esc(x.d)}</td><td>${esc(x.y)}</td><td>${esc(x.f)}</td><td>${esc(x.p)}</td>
+${can(s.id)?`<td style="white-space:nowrap"><button class="btn o" onclick="mE('${x.i}')">Edit</button> <button class="btn d" onclick="mD('${x.i}')">×</button></td>`:''}</tr>`).join('')||'<tr><td colspan="7" class="mu">No members yet.</td></tr>'}</table></div>
+${can(s.id)?'':'<p class="mu" style="margin-bottom:0">Login as this sector (or Leadership) to add or update members.</p>'}</div>`}
+$('main').innerHTML=h}
+function rl(){const p=$('qs').selectionStart;render();const e=$('qs');e.focus();e.setSelectionRange(p,p)}
+$('lb').onclick=()=>{if(auth){auth=null;render()}else{$('le').textContent='';$('lp').value='';op('m1')}};
+function login(){const s=S.find(x=>x.id===$('ls').value);if($('lp').value===s.pin){auth=s.id;cl('m1');go(s.id,'role')}else $('le').textContent='Wrong PIN.'}
+function mE(i){if(!can(cur.s))return;edit=i||null;const x=D[cur.s].m.find(m=>m.i===i)||{};
+$('mt').textContent=i?'Edit member':'Add member';$('fn').value=x.n||'';$('fd').value=x.d||'';$('fy').value=x.y||'';$('ff').value=x.f||'';$('fp').value=x.p||'';op('m2')}
+function saveM(){if(!can(cur.s))return;const n=$('fn').value.trim();if(!n)return;
+const o={n,d:$('fd').value.trim(),y:$('fy').value.trim(),f:$('ff').value.trim(),p:$('fp').value.trim(),g:cur.v};
+const a=D[cur.s].m;if(edit){const x=a.find(m=>m.i===edit);Object.assign(x,o)}else a.push({...o,i:Date.now()+''+Math.random().toString(36).slice(2,5)});
+sv();cl('m2');render()}
+function mD(i){if(!can(cur.s)||!confirm('Delete this member?'))return;D[cur.s].m=D[cur.s].m.filter(m=>m.i!==i);sv();render()}
+let sg='male';
+function subE(g){if(!can(cur.s))return;sg=g;const x=D[cur.s].sub[g];$('st').textContent=(g==='male'?'Male':'Female')+' sub-leader';$('sn').value=x.n;$('sp').value=x.p;op('m3')}
+function saveS(){if(!can(cur.s))return;D[cur.s].sub[sg]={n:$('sn').value.trim(),p:$('sp').value.trim()};sv();cl('m3');render()}
+render();
+</script></body></html>
